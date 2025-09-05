@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Completo - Antojitos Mexicanos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de colores mexicanos */
+        :root {
+            --rojo: #E63946;
+            --verde: #2A9D8F;
+            --amarillo: #F4A261;
+            --blanco: #F1FAEE;
+            --oscuro: #1D3557;
+            --sombra: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --transicion: all 0.3s ease;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--blanco) 0%, #f8f9fa 100%);
+            overflow-x: hidden;
+        }
+
+        body.mobile-view {
+            max-width: 480px;
+            margin: 0 auto;
+            box-shadow: var(--sombra);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Header y Navegación */
+        header {
+            background: linear-gradient(135deg, var(--rojo) 0%, #d62828 100%);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--blanco);
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--amarillo);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: var(--transicion);
+            position: relative;
+        }
+
+        nav a:hover {
+            background: var(--amarillo);
+            color: var(--oscuro);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--amarillo);
+            transition: var(--transicion);
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 80%;
+        }
+
+        .view-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--verde);
+            transition: var(--transicion);
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "📱";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transicion);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        input:checked + .slider {
+            background-color: var(--amarillo);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+            content: "💻";
+        }
+
+        .switch-label {
+            color: var(--blanco);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 7rem 2rem 3rem;
+            background: var(--blanco);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            color: var(--rojo);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '🌮';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+        }
+
+        .menu-category {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: var(--verde);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--amarillo);
+            padding-bottom: 0.5rem;
+        }
+
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dish-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+            position: relative;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .dish-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .dish-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .dish-card:hover .dish-image img {
+            transform: scale(1.1);
+        }
+
+        .dish-content {
+            padding: 1.5rem;
+        }
+
+        .dish-title {
+            font-size: 1.5rem;
+            color: var(--rojo);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .dish-price {
+            font-size: 1.5rem;
+            color: var(--verde);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .dish-price::before {
+            content: '💰';
+        }
+
+        .dish-details {
+            margin-bottom: 1rem;
+        }
+
+        .dish-detail-title {
+            font-weight: bold;
+            color: var(--oscuro);
+            margin-bottom: 0.3rem;
+        }
+
+        .dish-detail-content {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            padding-left: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--oscuro) 0%, #14213d 100%);
+            color: var(--blanco);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transicion);
+            color: var(--blanco);
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--rojo);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating Buttons */
+        .floating-buttons {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .whatsapp-btn,
+        .scroll-top-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: var(--verde);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
+        .scroll-top-btn {
+            background: var(--rojo);
+        }
+
+        .whatsapp-btn:hover,
+        .scroll-top-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Decoraciones mexicanas */
+        .mexican-decoration {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .decoration-1 { top: 10%; left: 5%; animation: float 6s ease-in-out infinite; }
+        .decoration-2 { top: 20%; right: 5%; animation: float 7s ease-in-out infinite 1s; }
+        .decoration-3 { bottom: 30%; left: 10%; animation: float 5s ease-in-out infinite 0.5s; }
+        .decoration-4 { bottom: 20%; right: 15%; animation: float 8s ease-in-out infinite 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .category-title {
+                font-size: 2rem;
+            }
+
+            .dishes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-buttons {
+                right: 1rem;
+                bottom: 1rem;
+            }
+
+            .whatsapp-btn,
+            .scroll-top-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .category-title {
+                font-size: 1.8rem;
+            }
+
+            .dish-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🌵</span>
+                <h1>LOS WERITOS</h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="C:\Users\Sears\Desktop\proyect_MexicanMom\basico\index.html">Inicio</a></li>
+                    <li><a href="#menu">Menú</a></li>
+                    <li><a href="#footer">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <div class="view-controls">
+                <span class="switch-label">Vista Móvil</span>
+                <label class="switch">
+                    <input type="checkbox" id="viewToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <h2 class="section-title">Menú Completo</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ENCHILADAS -->
+        <div class="menu-category">
+            <h3 class="category-title">ENCHILADAS</h3>
+            <div class="dishes-grid">
+                <!-- Enchilada Sencilla -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\enchi senci.jpg" alt="Enchilada sencilla">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Enchilada Sencilla</h3>
+                        <p class="dish-price">$50</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Tortilla de maíz mojada en chile rojo</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">Rellena de frijoles, queso con cebolla o queso solo</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Repollo o lechuga, rueda de jitomate, cebolla, chiles en vinagre, queso y crema</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Enchiladas con Pollo -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\maxresdefault.jpg" alt="Enchiladas con pollo">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Enchiladas con Pollo (Dorado)</h3>
+                        <p class="dish-price">$85</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Tortilla de maíz mojada en chile rojo con pollo dorado</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">Rellena de frijoles, queso con cebolla o solo queso</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Repollo o lechuga, rueda de jitomate, cebolla, chiles en vinagre, queso y crema</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Enchiladas con Cecina -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\sesina .jpg" alt="Enchiladas con cecina">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Enchiladas con Cecina</h3>
+                        <p class="dish-price">$85</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Tortilla de maíz mojada en chile rojo con cecina</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">Rellena de frijoles, queso con cebolla o solo queso</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Repollo o lechuga, rueda de jitomate, cebolla, chiles en vinagre, queso y crema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--                                                                           GORDITAS -->
+        <div class="menu-category">
+            <h3 class="category-title">GORDITAS</h3>
+            <div class="dishes-grid">
+
+                <!-- Gorditas Dorada -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\gordas.jpg" alt="Gorditas Dorada">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Gorditas Dorada</h3>
+                        <p class="dish-price">$18 c/u</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Gordita de maiz relleno de frijol con guiso a elegir (guiso del dia)</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">Repollo, ruedas de jitomate, cebolla, queso y crema</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">----------------------------------------</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gorditas de Comal -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\gorda comal.jpg" alt="Gorditas de Comal">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Gorditas de Comal</h3>
+                        <p class="dish-price">$18 cada pieza</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Gordita de maiz relleno de frijol con guiso a elegir (guiso del dia)</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">ESPECIALIDAD DE LA CASA (carne con chile) o guiso del dia, repollo, ruedas de jitomate, cebolla, queso y crema</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">----------------------------------------</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BURRITOS -->
+        <div class="menu-category">
+            <h3 class="category-title">BURRITOS</h3>
+            <div class="dishes-grid">
+                <!-- Burritos -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\burritos preparados.jpg" alt="Burritos">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Burritos</h3>
+                        <p class="dish-price">$15 cada pieza</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Tortilla de harina, rellena de frijol con guiso a elegir (guiso del dia)</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">ESPECIALIDAD DE LA CASA (carne con chile) o guiso del dia</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Sola, repollo, ruedas de jitomate, cebolla, queso y crema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- QUESADILLAS -->
+        <div class="menu-category">
+            <h3 class="category-title">QUESADILLAS</h3>
+            <div class="dishes-grid">
+                <!-- Quesadilla de Maíz Dorada -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\quesa.png" alt="Quesadilla de Maíz Dorada">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Quesadilla de Maíz Dorada</h3>
+                        <p class="dish-price">$30 cada pieza</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Tortilla de maiz, con guiso a elegir (guiso del dia)</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">ESPECIALIDAD DE LA CASA (carne con chile) o guiso del dia</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Sola, repollo o lechuga, ruedas de jitomate, cebolla, queso y crema y salsa verde</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quesadilla de Harina -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\quesa hari.jpg" alt="Quesadilla de Harina">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Quesadilla de Harina</h3>
+                        <p class="dish-price">$30 cada pieza</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Tortilla de harina, con guiso a elegir (guiso del dia)</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">ESPECIALIDAD DE LA CASA (carne con chile) o guiso del dia</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Sola, repollo o lechuga, ruedas de jitomate, cebolla, queso y crema y salsa verde</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SOPES -->
+        <div class="menu-category">
+            <h3 class="category-title">SOPES</h3>
+            <div class="dishes-grid">
+                <!-- Sopes Dorados -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\sopes3.png" alt="Sopes Dorados">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Sopes Dorados</h3>
+                        <p class="dish-price">$18 cada pieza</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Sope de maiz relleno de frijol con guiso a elegir (guiso del dia)</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">ESPECIALIDAD DE LA CASA (carne con chile) o guiso del dia, repollo, ruedas de jitomate, cebolla, queso y crema</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">Salsa verde</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BOTANAS -->
+        <div class="menu-category">
+            <h3 class="category-title">BOTANAS</h3>
+            <div class="dishes-grid">
+                <!-- Chicharrones Preparados -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\chicharones.jpg" alt="Chicharrones Preparados">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Chicharrones Preparados</h3>
+                        <p class="dish-price">$35</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente:</p>
+                            <p class="dish-detail-content">Repollo, pico de gallo, cueritos, salsa</p>
+                            
+                            <p class="dish-detail-title">Opcionales (con costo adicional $5):</p>
+                            <p class="dish-detail-content">Aguacate, crema</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">-----------------------------------------</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Botanas -->
+                <div class="dish-card animate-on-scroll">
+                    <div class="dish-image">
+                        <img src= "C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\prueba\botana variedad.jpg" alt="Botanas">
+                    </div>
+                    <div class="dish-content">
+                        <h3 class="dish-title">Botanas</h3>
+                        <p class="dish-price">Solo $10 | Preparados $20</p>
+                        
+                        <div class="dish-details">
+                            <p class="dish-detail-title">Ingrediente (Solo):</p>
+                            <p class="dish-detail-content">Salsa, limon, sal</p>
+                            
+                            <p class="dish-detail-title">Ingrediente (Preparado):</p>
+                            <p class="dish-detail-content">Repollo, pico de gallo, cueritos, salsa, limon, sal</p>
+                            
+                            <p class="dish-detail-title">Opcionales:</p>
+                            <p class="dish-detail-content">Crema</p>
+                            
+                            <p class="dish-detail-title">Adorno:</p>
+                            <p class="dish-detail-content">-----------------------------------------</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                        <!-- Collage de imágenes agregado aquí -->
+        <div class="image-collage animate-on-scroll">
+            <h3 class="collage-title">Nuestras Especialidades</h3>
+            <div class="collage-grid">
+
+
+
+<h2>Nuestro Menú</h2>
+
+<div class="collage-grid">
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\burritos preparados.jpg" alt="Burritos preparados">
+        <p class="collage-caption">Burritos preparados</p>
+    </div>
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\burritos.jpg" alt="Burritos">
+        <p class="collage-caption">Burritos</p>
+    </div>
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\cecina.png" alt="Enchiladas con cecina">
+        <p class="collage-caption">Enchiladas con cecina</p>
+    </div>
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\enchiladas estilo guanajuato.jpg" alt="Enchiladas estilo Guanajuato">
+        <p class="collage-caption">Enchiladas estilo Guanajuato</p>
+    </div>
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\gorditas con todo estrella.jpg" alt="Gorditas con todo">
+        <p class="collage-caption">Gorditas con todo</p>
+    </div>
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\gorditas.jpg" alt="Gorditas">
+        <p class="collage-caption">Gorditas</p>
+    </div>
+    <div class="collage-item">
+        <img src="C:\Users\Sears\Desktop\proyect_MexicanMom\imagenes\menu\sopes.jpg" alt="Sopes">
+        <p class="collage-caption">Sopes</p>
+    </div>
+</div>
+<style>
+    .collage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+        justify-items: center;
+        align-items: start;
+    }
+    .collage-item {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        overflow: hidden;
+        text-align: center;
+        padding: 1rem;
+        transition: transform 0.3s;
+    }
+    .collage-item img {
+        width: 100%;
+        max-width: 220px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .collage-caption {
+        font-family: 'Pacifico', cursive;
+        color: var(--rojo);
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+    }
+    .collage-item:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+    }
+</style>
+
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h3>Dirección</h3>
+                        <p>Calle Henequén #173, El Garambullo, Querétaro</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <h3>Teléfono</h3>
+                        <p>442 783 6506</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">⏰</div>
+                    <div>
+                        <h3>Horario</h3>
+                        <p>Jueves a Viernes: 6:00 PM - 10:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>Derechos reservados © 2025 "Los Weitos". Todos los sabores protegidos.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <button class="whatsapp-btn" onclick="openWhatsApp()">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+        <button class="scroll-top-btn" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script>
+        // Toggle para vista móvil/escritorio
+        document.getElementById('viewToggle').addEventListener('change', function() {
+            document.body.classList.toggle('mobile-view');
+            document.querySelector('.switch-label').textContent = 
+                this.checked ? 'Vista Escritorio' : 'Vista Móvil';
+        });
+
+        // Scroll suave para navegación
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación al hacer scroll
+        function checkScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (elementPosition < screenPosition) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+
+        // Botón flotante para ir arriba
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // WhatsApp integration
+        function openWhatsApp() {
+            const phoneNumber = '524427836506';
+            const message = 'Hola, me interesa hacer un pedido de Antojitos Mexicanos "los weritos"';
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Efectos hover mejorados
+        document.querySelectorAll('.dish-card').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Inicializar cuando el documento esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            checkScroll();
+        });
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</body>
+</html>
